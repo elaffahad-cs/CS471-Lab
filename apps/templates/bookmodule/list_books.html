@@ -1,0 +1,29 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} List of Books {% endblock title %}
+
+{% block content %}
+
+<h1>List of Books</h1>
+
+<div style="display: block; margin-top: 20px;">
+
+  <div>
+    <p>1) Internet & World Wide Web – How to Program</p>
+    <img src="{% static 'book1.jpg' %}" width="200">
+  </div>
+
+  <div>
+    <p>2) C++ How to Program – Seventh Edition</p>
+    <img src="{% static 'book2.jpg' %}" width="200">
+  </div>
+
+  <div>
+    <p>3) Introduction to Java Programming</p>
+    <img src="{% static 'book3.jpg' %}" width="200">
+  </div>
+
+</div>
+
+{% endblock content %}
