@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Text Formatting {% endblock title %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'main.css' %}">
+
+<h1 class="lab-title">Example of Formatting tags</h1>
+
+<p class="lab-format-text"> This text has <b>subtext</b> using b tag</p>
+<p class="lab-format-text"> This text has <strong>subtext</strong> using strong tag</p>
+<p class="lab-format-text"> This text has <i>subtext</i> using i tag</p>
+<p class="lab-format-text"> This text has <em>subtext</em> using emphasize tag</p>
+<p class="lab-format-text"> This text has <small>subtext</small> using small tag</p>
+<p class="lab-format-text"> This text has <mark>subtext</mark> using mark tag</p>
+<p class="lab-format-text"> This text has <del>subtext</del> using del tag</p>
+<p class="lab-format-text"> This text has <ins>subtext</ins> using ins tag</p>
+<p class="lab-format-text"> This text has X<sub>subtext</sub> using sub tag</p>
+<p class="lab-format-text"> This text has X<sup>subtext</sup> using sup tag</p>
+
+{% endblock content %}

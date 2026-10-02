@@ -37,3 +37,15 @@ def viewbook(request, bookId):
 
 def aboutus(request):
     return render(request, "bookmodule/aboutus.html")
+
+def html_links(request):
+    return render(request, 'bookmodule/html_links.html')
+
+def text_formatting(request):
+    return render(request, 'bookmodule/text_formatting.html')
+
+def lists(request):
+    return render(request, 'bookmodule/lists.html')
+
+def tables(request):
+    return render(request, 'bookmodule/tables.html')

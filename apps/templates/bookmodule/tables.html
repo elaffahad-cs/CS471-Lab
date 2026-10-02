@@ -1,0 +1,97 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'main.css' %}">
+
+<!-- =========================
+     TABLE 1
+========================= -->
+
+<section class="table-one-section">
+    <h2>Table 1: Table<br>of Fruits and<br>Their Prices</h2>
+
+    <table class="fruit-table">
+        <thead>
+            <tr>
+                <th>Fruit</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr><td>Apple</td><td>$0.25</td></tr>
+            <tr><td>Orange</td><td>$0.50</td></tr>
+            <tr><td>Banana</td><td>$1.00</td></tr>
+            <tr><td>Pineapple</td><td>$2.00</td></tr>
+            <tr class="total"><td>Total</td><td>$3.75</td></tr>
+        </tbody>
+    </table>
+</section>
+
+
+<!-- =========================
+     TABLE 2
+========================= -->
+
+<section class="table-two-section">
+
+    <div class="table-two-title">
+        Table 2: A more complex sample table
+    </div>
+
+    <table class="camel-table">
+
+        <tr>
+            <!-- Image -->
+            <td class="image-cell" rowspan="2">
+                <img src="{% static 'desert.jpg' %}" alt="Camel in the desert">
+            </td>
+
+            <!-- Main heading -->
+            <td class="camel-heading" colspan="4">
+                <strong>Camelid comparison</strong>
+                <br>
+                <span>Approximate as of 6/2011</span>
+            </td>
+        </tr>
+
+        <tr class="column-headings">
+            <th># of humps</th>
+            <th>Indigenous region</th>
+            <th>Spits?</th>
+            <th>Produces wool?</th>
+        </tr>
+
+        <tr>
+            <th>Dromedary</th>
+            <td>1</td>
+            <td>Arabian Peninsula</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+
+        <tr>
+            <th>Camels (bactrian)</th>
+            <td>2</td>
+            <td>Africa/Asia</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+
+        <tr>
+            <th>Llamas</th>
+            <td>1</td>
+            <td>Andes Mountains</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+
+    </table>
+
+</section>
+
+{% endblock content %}

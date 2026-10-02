@@ -1,0 +1,218 @@
+/* Lab 5 – Links */
+.lab-link {
+    display: block;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #f0f0f0;
+    text-align: center;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 6px;
+    color: #003366; /* اللون الأساسي */
+}
+
+/* visited = red */
+.lab-link:visited {
+    color: red;
+}
+
+/* hover = yellow */
+.lab-link:hover {
+    background-color: #003366; /* لو تبين نغيره قولي لي */
+    color: yellow;
+}
+
+/* active = white */
+.lab-link:active {
+    background-color: #ffcc00; /* لو تبين نغيره قولي لي */
+    color: white;
+}
+
+
+/* Lab 5 – Formatting */
+.lab-title {
+    text-align: center;
+    color: #1d6ebe;
+    margin-bottom: 22px;
+}
+
+.lab-format-text {
+    font-size: 22px;   /* كبّريه قد ما تبين */
+    line-height: 1.8;  /* يخلي السطور مرتبة وواضحة */
+}
+
+
+/* Lab 5 – Lists */
+ul, ol {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+/* Lab 5 – Tables */
+table {
+    width: 70%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: center;
+}
+
+caption {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+/* Link 1 */
+.lab-link-1 {
+    background-color: #ccffcc; /* أخضر فاتح */
+    color: red;
+}
+
+/* Link 2 */
+.lab-link-2 {
+    background-color: #555555; /* رمادي غامق */
+    color: yellow;
+}
+
+/* Link 3 */
+.lab-link-3 {
+    background-color: black;
+    color: #66ccff; /* أزرق سماوي */
+}
+
+/* Task 3 lab5 – Lists Styling */
+.lab-list-title {
+    background-color: #008080; /* نفس لون الترويسة في الصورة */
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 26px;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.lab-list-section {
+    font-size: 20px;
+    line-height: 1.8;
+    margin-left: 30px;
+}
+
+.lab-list-section ul {
+    margin-bottom: 20px;
+}
+
+.lab-list-section ol {
+    margin-bottom: 20px;
+}
+
+/* Task 4 – Tables Styling */
+/* GENERAL */
+body {
+    margin: 0;
+    padding: 40px 20px;
+    background: white;
+    font-family: "Times New Roman", Times, serif;
+}
+
+/* =========================
+   TABLE 1
+========================= */
+.table-one-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.table-one-section h2 {
+    font-size: 22px;        /* أصغر */
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+
+.fruit-table {
+    margin: 0 auto;
+    border-collapse: collapse;   /* مهم لإزالة التقسيم */
+    font-size: 16px;             /* أصغر */
+    width: 280px;                /* يصغّر الجدول */
+}
+
+.fruit-table th,
+.fruit-table td {
+    border: 3px double #000;     /* DOUBLE BORDER */
+    padding: 3px 5px;            /* أصغر */
+    background: #fff;
+}
+
+.fruit-table .total td {
+    font-weight: bold;
+}
+
+
+/* =========================
+   TABLE 2
+========================= */
+
+.table-two-section {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.table-two-title {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.camel-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 19px;
+}
+
+.camel-table th,
+.camel-table td {
+    border: 1px solid #777;
+    text-align: center;
+    padding: 6px;
+}
+
+/* IMAGE CELL */
+.image-cell {
+    width: 37%;
+    height: 360px;
+    padding: 5px !important;
+}
+
+.image-cell img {
+    width: 80%;
+    height: 340px;
+    object-fit: cover;
+    display: block;
+    margin: auto;
+}
+
+/* HEADING */
+.camel-heading {
+    height: 235px;
+    font-size: 25px;
+    line-height: 1.5;
+}
+
+/* COLUMN HEADINGS */
+.column-headings {
+    height: 105px;
+}
+
+.column-headings th {
+    font-weight: bold;
+}
+
+/* ROW HEIGHTS */
+.camel-table tr:nth-last-child(-n+3) {
+    height: 35px;
+}
