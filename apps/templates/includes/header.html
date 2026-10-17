@@ -8,5 +8,9 @@
   <a class="{% if url_name == 'books.lists' %}active{% endif %}" href="{% url 'books.lists' %}">Lists</a>
   <a class="{% if url_name == 'books.tables' %}active{% endif %}" href="{% url 'books.tables' %}">Tables</a>
   <a class="{% if url_name == 'books.search' %}active{% endif %}" href="{% url 'books.search' %}">Search</a>
+  <a href="{% url 'add_books' %}">Add Books</a>
+  <a href="{% url 'books.simple.query' %}">Simple Query</a>
+  <a href="{% url 'books.complex.query' %}">Complex Query</a>
+
 </div>
 {% endwith %}

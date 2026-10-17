@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Book
 
 # -------------------------
 # Lab3 (saved for future use)
@@ -81,3 +82,66 @@ def search(request):
         return render(request, 'bookmodule/bookList.html', {'books': newBooks})
 
     return render(request, 'bookmodule/search.html')
+
+from django.http import HttpResponse
+
+def add_books(request):
+    books_data = [
+    {
+        "title": "Continuous and Delivery",
+        "author": "J. Humble and D. Farley",
+        "price": 90.00,   # price too low for complex
+        "edition": 1      # edition too low for complex
+    },
+    {
+        "title": "Data and Algorithms",
+        "author": "Tom Anderson",
+        "price": 150.00,
+        "edition": 2
+    },
+    {
+        "title": "Security and Cryptography",
+        "author": "Bruce Schneier",
+        "price": 200.00,
+        "edition": 5
+    },
+    {
+        "title": "Machine Learning and Deep Learning",
+        "author": "A. Karim",
+        "price": 180.00,
+        "edition": 4
+    },
+    {
+        "title": "Systems Networks",
+        "author": "Mark Russinovich",
+        "price": 130.00,
+        "edition": 3
+    }
+]
+
+    for b in books_data:
+        Book.objects.create(
+            title=b["title"],
+            author=b["author"],
+            price=b["price"],
+            edition=b["edition"]
+        )
+
+    return HttpResponse("Books added successfully!")
+
+
+def simple_query(request):
+    mybooks = Book.objects.filter(title__icontains='and')
+    return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+
+def complex_query(request):
+    mybooks = Book.objects.filter(author__isnull=False)\
+                          .filter(title__icontains='and')\
+                          .filter(edition__gte=2)\
+                          .exclude(price__lte=100)[:10]
+
+    if len(mybooks) >= 1:
+        return render(request, 'bookmodule/bookList.html', {'books': mybooks})
+    else:
+        return render(request, 'bookmodule/index.html')
+
