@@ -7,7 +7,7 @@ Lab 9 Task 6
 {% block content %}
 
 <h2 style="text-align:center;">
-    Lab 9 - Task 6: Filtered Book Count per Publisher
+    Lab 9 - Task 6: Filtered Book Count per Publisher (price > 50, 1 ≤ quantity < 5)
 </h2>
 
 {% for publisher in publishers %}
@@ -27,7 +27,7 @@ font-size:22px;
     <strong>Location:</strong> {{ publisher.location }}
     <br>
 
-    <strong>Books (price &gt; 50, 1 &le; quantity &lt; 5):</strong>
+    <strong>Books:</strong>
     {{ publisher.filtered_count }}
 
 </div>
