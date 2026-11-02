@@ -3,7 +3,7 @@
 
 {% block content %}
 <h2 style="text-align:center; margin-bottom:40px; font-size:38px;">
-    Search Results
+    {{ title }}
 </h2>
 
 {% if books %}
@@ -20,7 +20,9 @@
     ">
         <strong>ID:</strong> {{ obj.id }} <br>
         <strong>Title:</strong> {{ obj.title }} <br>
-        <strong>Author:</strong> {{ obj.author }}
+        <strong>Author:</strong> {{ obj.author }} <br>
+        <strong>Price:</strong> ${{ obj.price }} <br>
+        <strong>Edition:</strong> {{ obj.edition }}
     </div>
     {% endfor %}
 

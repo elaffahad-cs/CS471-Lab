@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from .models import Book
+from django.db.models import Q
+from django.db.models import Count, Sum, Avg, Max, Min
+from django.http import HttpResponse
+from .models import Student, Address
 
 # -------------------------
 # Lab3 (saved for future use)
@@ -86,6 +90,8 @@ def search(request):
 from django.http import HttpResponse
 
 def add_books(request):
+    Book.objects.all().delete()
+
     books_data = [
     {
         "title": "Continuous and Delivery",
@@ -102,13 +108,13 @@ def add_books(request):
     {
         "title": "Security and Cryptography",
         "author": "Bruce Schneier",
-        "price": 200.00,
+        "price": 70.00,
         "edition": 5
     },
     {
         "title": "Machine Learning and Deep Learning",
         "author": "A. Karim",
-        "price": 180.00,
+        "price": 80.00,
         "edition": 4
     },
     {
@@ -116,7 +122,20 @@ def add_books(request):
         "author": "Mark Russinovich",
         "price": 130.00,
         "edition": 3
+    },
+    {
+        "title": "Python Basics",
+        "author": "Ali Ahmed",
+        "price": 70.00,
+        "edition": 1
+    },
+    {
+        "title": "Computer Networks",
+        "author": "Mark Russinovich",
+        "price": 130.00,
+        "edition": 5
     }
+        
 ]
 
     for b in books_data:
@@ -145,3 +164,125 @@ def complex_query(request):
     else:
         return render(request, 'bookmodule/index.html')
 
+
+def lab8_task1(request):
+    books = Book.objects.filter(Q(price__lte=80))
+
+    return render(
+        request,
+        'bookmodule/bookList.html',
+        {
+            'books': books,
+            'title': 'Lab 8 - Task 1 (Price ≤ 80)'
+        }
+    )
+
+
+def lab8_task2(request):
+    books = Book.objects.filter(
+        Q(edition__gt=3) &
+        (Q(title__icontains='co') | Q(author__icontains='co'))
+    )
+
+    return render(
+        request,
+        'bookmodule/bookList.html',
+        {
+            'books': books,
+            'title': 'Lab 8 - Task 2 (Edition > 3 and contains "co")'
+        }
+    )
+
+
+def lab8_task3(request):
+    books = Book.objects.filter(
+        Q(edition__lte=3) &
+        ~(Q(title__icontains='co') | Q(author__icontains='co'))
+    )
+
+    return render(
+        request,
+        'bookmodule/bookList.html',
+        {
+            'books': books,
+            'title': 'Lab 8 - Task 3 (Edition ≤ 3 and does NOT contain "co")'
+        }
+    )
+
+def lab8_task4(request):
+
+    books = Book.objects.order_by('title')
+
+    return render(
+        request,
+        'bookmodule/bookList.html',
+        {
+            'books': books,
+            'title': 'Lab 8 - Task 4 (Books Ordered By Title)'
+        }
+    )
+
+def lab8_task5(request):
+
+    stats = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price'),
+        average_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+
+    return render(
+        request,
+        'bookmodule/task5.html',
+        {'stats': stats}
+    )
+
+
+def add_students(request):
+
+    Student.objects.all().delete()
+    Address.objects.all().delete()
+
+    riyadh = Address.objects.create(city="Riyadh")
+    qassim = Address.objects.create(city="Qassim")
+    jeddah = Address.objects.create(city="Jeddah")
+
+    Student.objects.create(
+        name="Ali",
+        age=21,
+        address=riyadh
+    )
+
+    Student.objects.create(
+        name="Sara",
+        age=22,
+        address=qassim
+    )
+
+    Student.objects.create(
+        name="Fahad",
+        age=20,
+        address=qassim
+    )
+
+    Student.objects.create(
+        name="Noor",
+        age=23,
+        address=jeddah
+    )
+
+    return HttpResponse("Students added successfully!")
+
+
+def lab8_task7(request):
+
+    cities = Address.objects.annotate(
+        student_count=Count('student')
+    )
+
+    return render(
+        request,
+        'bookmodule/task7.html',
+        {'cities': cities}
+    )

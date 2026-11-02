@@ -26,6 +26,14 @@ urlpatterns = [
     path('simple/query/', views.simple_query, name='books.simple.query'),
     path('complex/query/', views.complex_query, name='books.complex.query'),
     path('add_books/', views.add_books, name='add_books'),
+    path('lab8/task1/', views.lab8_task1, name='books.lab8.task1'),
+    path('lab8/task2/', views.lab8_task2, name='books.lab8.task2'),
+    path('lab8/task3/', views.lab8_task3, name='books.lab8.task3'),
+    path('lab8/task4/', views.lab8_task4, name='books.lab8.task4'),
+    path('lab8/task5/', views.lab8_task5, name='books.lab8.task5'),
+    path('lab8/add_students/', views.add_students, name='books.add_students'),
+    path('lab8/task7/', views.lab8_task7, name='books.lab8.task7'),
+
 
 
 
