@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .models import Book
-from django.db.models import Q
-from django.db.models import Count, Sum, Avg, Max, Min
+from django.db.models import Count, Sum, Avg, Max, Min, Value, OuterRef, Subquery,Q
 from django.http import HttpResponse
 from .models import Student, Address
-
+from django.utils import timezone
+from .models import Publisher, Author, Lab9Book
+from django.db.models.functions import Coalesce
 # -------------------------
 # Lab3 (saved for future use)
 # -------------------------
@@ -285,4 +286,189 @@ def lab8_task7(request):
         request,
         'bookmodule/task7.html',
         {'cities': cities}
+    )
+
+
+from datetime import timedelta
+
+def add_lab9_data(request):
+    Publisher.objects.all().delete()
+    Author.objects.all().delete()
+    Lab9Book.objects.all().delete()
+
+    # ---------- PUBLISHERS ----------
+    p1 = Publisher.objects.create(name="O'Reilly",    location="USA")
+    p2 = Publisher.objects.create(name="Pearson",     location="UK")
+    p3 = Publisher.objects.create(name="McGraw Hill", location="Canada")
+    p4 = Publisher.objects.create(name="Springer",    location="Germany")
+    p5 = Publisher.objects.create(name="Apollo Press", location="Egypt")   # no books → tests Coalesce / None
+
+    # ---------- AUTHORS ----------
+    a1 = Author.objects.create(name="Ali Ahmed")
+    a2 = Author.objects.create(name="Sara Khalid")
+    a3 = Author.objects.create(name="Fahad Saleh")
+    a4 = Author.objects.create(name="Mona Hassan")
+
+    now = timezone.now()
+
+    # ---------- BOOKS ----------
+    # p1 – O'Reilly (2 books, different dates)
+    b1 = Lab9Book.objects.create(
+        title="Python Basics", price=40, quantity=7, rating=4,
+        pubdate=now - timedelta(days=400), publisher=p1
+    )
+    b2 = Lab9Book.objects.create(
+        title="Database Systems", price=120, quantity=3, rating=5,
+        pubdate=now - timedelta(days=200), publisher=p1
+    )
+
+    # p2 – Pearson (2 books)
+    b3 = Lab9Book.objects.create(
+        title="Computer Networks", price=80, quantity=10, rating=3,
+        pubdate=now - timedelta(days=300), publisher=p2
+    )
+    b5 = Lab9Book.objects.create(
+        title="Operating Systems", price=95, quantity=4, rating=4,
+        pubdate=now - timedelta(days=100), publisher=p2
+    )
+
+    # p3 – McGraw Hill (2 books)
+    b4 = Lab9Book.objects.create(
+        title="Cyber Security", price=150, quantity=2, rating=5,
+        pubdate=now - timedelta(days=50), publisher=p3
+    )
+    b6 = Lab9Book.objects.create(
+        title="Data Structures", price=60, quantity=8, rating=4,
+        pubdate=now - timedelta(days=350), publisher=p3
+    )
+
+    # p4 – Springer (2 books)
+    b7 = Lab9Book.objects.create(
+        title="Machine Learning", price=200, quantity=3, rating=5,
+        pubdate=now - timedelta(days=150), publisher=p4
+    )
+    b8 = Lab9Book.objects.create(
+        title="Compiler Design", price=70, quantity=1, rating=3,
+        pubdate=now - timedelta(days=250), publisher=p4
+    )
+
+    # b9 – one book with rating 2 and price ≤ 50 for edge cases
+    b9 = Lab9Book.objects.create(
+        title="Intro to Programming", price=45, quantity=6, rating=2,
+        pubdate=now - timedelta(days=500), publisher=p1
+    )
+
+    # p5 – Apollo Press has NO books → tests Coalesce & None branches
+
+    # ---------- AUTHORS ↔ BOOKS ----------
+    b1.authors.add(a1)
+    b2.authors.add(a1, a2)
+    b3.authors.add(a2)
+    b4.authors.add(a3)
+    b5.authors.add(a4)
+    b6.authors.add(a3)
+    b7.authors.add(a4)
+    b8.authors.add(a1, a4)
+    b9.authors.add(a2)
+
+    return HttpResponse("Lab9 Data Added")
+
+def lab9_task1(request):
+
+    total_quantity = Lab9Book.objects.aggregate(
+        total=Sum('quantity')
+    )['total']
+
+    books = Lab9Book.objects.all()
+
+    for book in books:
+        book.availability = round(
+            (book.quantity / total_quantity) * 100,
+            2
+        )
+
+    return render(
+        request,
+        'bookmodule/lab9_task1.html',
+        {'books': books}
+    )
+
+def lab9_task2(request):
+    publishers = Publisher.objects.annotate(
+        total_stock=Coalesce(Sum('lab9book__quantity'), Value(0))).order_by('name')
+
+    return render(
+        request,
+        'bookmodule/lab9_task2.html',
+        {'publishers': publishers}
+    )
+
+def lab9_task3(request):
+    oldest_book = Lab9Book.objects.filter(
+        publisher=OuterRef('pk')
+    ).order_by('pubdate')
+
+    publishers = Publisher.objects.annotate(
+        oldest_title=Subquery(oldest_book.values('title')[:1]),
+        oldest_date=Subquery(oldest_book.values('pubdate')[:1]),
+        oldest_price=Subquery(oldest_book.values('price')[:1]),
+        oldest_quantity=Subquery(oldest_book.values('quantity')[:1]),
+    ).order_by('name')
+
+    return render(
+        request,
+        'bookmodule/lab9_task3.html',
+        {'publishers': publishers}
+    )
+
+def lab9_task4(request):
+    publishers = Publisher.objects.annotate(
+        avg_price=Avg('lab9book__price'),
+        min_price=Min('lab9book__price'),
+        max_price=Max('lab9book__price'),
+    ).order_by('name')
+
+    return render(
+        request,
+        'bookmodule/lab9_task4.html',
+        {'publishers': publishers}
+    )
+
+def lab9_task5(request):
+    publishers = Publisher.objects.annotate(
+        high_rated_count=Count(
+            'lab9book',
+            filter=Q(lab9book__rating__gte=4)
+        ),
+        high_rated_quantity=Coalesce(
+            Sum(
+                'lab9book__quantity',
+                filter=Q(lab9book__rating__gte=4)
+            ),
+            Value(0)
+        ),
+    ).order_by('name')
+
+    return render(
+        request,
+        'bookmodule/lab9_task5.html',
+        {'publishers': publishers}
+    )
+
+def lab9_task6(request):
+    publishers = Publisher.objects.annotate(
+        filtered_count=Count(
+            'lab9book',
+            filter=Q(
+                lab9book__price__gt=50,
+                lab9book__quantity__lt=5,
+                lab9book__quantity__gte=1,
+            )
+        ),
+    ).order_by('name')
+
+    return render(
+        request,
+        'bookmodule/lab9_task6.html',
+        {'publishers': publishers}
     )

@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Lab 9 Task 6
+{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align:center;">
+    Lab 9 - Task 6: Filtered Book Count per Publisher
+</h2>
+
+{% for publisher in publishers %}
+
+<div style="
+width:80%;
+margin:20px auto;
+padding:20px;
+border:2px solid #333;
+border-radius:10px;
+font-size:22px;
+">
+
+    <strong>Publisher:</strong> {{ publisher.name }}
+    <br>
+
+    <strong>Location:</strong> {{ publisher.location }}
+    <br>
+
+    <strong>Books (price &gt; 50, 1 &le; quantity &lt; 5):</strong>
+    {{ publisher.filtered_count }}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

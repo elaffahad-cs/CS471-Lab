@@ -1,0 +1,49 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Lab 9 Task 3
+{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align:center;">
+    Lab 9 - Task 3: Oldest Book per Publisher
+</h2>
+
+{% for publisher in publishers %}
+
+<div style="
+width:80%;
+margin:20px auto;
+padding:20px;
+border:2px solid #333;
+border-radius:10px;
+font-size:22px;
+">
+
+    <strong>Publisher:</strong> {{ publisher.name }}
+    <br>
+
+    <strong>Location:</strong> {{ publisher.location }}
+    <br>
+
+    {% if publisher.oldest_title %}
+        <strong>Oldest Book:</strong> {{ publisher.oldest_title }}
+        <br>
+
+        <strong>Published:</strong> {{ publisher.oldest_date }}
+        <br>
+
+        <strong>Price:</strong> {{ publisher.oldest_price }}
+        <br>
+
+        <strong>Quantity:</strong> {{ publisher.oldest_quantity }}
+    {% else %}
+        <em>No books published yet.</em>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

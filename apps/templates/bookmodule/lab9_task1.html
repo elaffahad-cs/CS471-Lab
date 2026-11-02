@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Lab 9 Task 1
+{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align:center;">
+    Lab 9 - Task 1: Book Availability Percentage
+</h2>
+
+{% for book in books %}
+
+<div style="
+width:80%;
+margin:20px auto;
+padding:20px;
+border:2px solid #333;
+border-radius:10px;
+font-size:22px;
+">
+
+    <strong>Title:</strong> {{ book.title }}
+    <br>
+
+    <strong>Quantity:</strong> {{ book.quantity }}
+    <br>
+
+    <strong>Availability:</strong>
+    {{ book.availability }} %
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

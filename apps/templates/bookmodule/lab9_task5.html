@@ -1,0 +1,36 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Lab 9 Task 5
+{% endblock %}
+
+{% block content %}
+
+<h2 style="text-align:center;">
+    Lab 9 - Task 5: Highly-Rated Books per Publisher
+</h2>
+
+{% for publisher in publishers %}
+
+<div style="
+width:80%;
+margin:20px auto;
+padding:20px;
+border:2px solid #333;
+border-radius:10px;
+font-size:22px;
+">
+
+    <strong>Publisher:</strong> {{ publisher.name }}
+    <br>
+
+    <strong>Highly-Rated Books Count:</strong> {{ publisher.high_rated_count }}
+    <br>
+
+    <strong>Highly-Rated Books Quantity:</strong> {{ publisher.high_rated_quantity }}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}
