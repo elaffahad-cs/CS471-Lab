@@ -9,7 +9,7 @@ Lab10 Books
 <h2>Lab 10 - Books List</h2>
 
 <p>
-    <a href="/books/lab10/addbook/">
+    <a href="{% url 'books.lab10.add' %}">
         Add New Book
     </a>
 </p>
@@ -37,14 +37,15 @@ Lab10 Books
 
         <td>
 
-            <a href="/books/lab10/editbook/{{ book.id }}/">
-                Edit
+            <a href="{% url 'books.lab10.form.edit' book.id %}">
+                Form Edit
             </a>
 
             |
 
-            <a href="/books/lab10/deletebook/{{ book.id }}/">
-                Delete
+            
+            <a href="{% url 'books.lab10.form.delete' book.id %}">
+                Form Delete
             </a>
 
         </td>
