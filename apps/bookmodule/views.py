@@ -472,3 +472,14 @@ def lab9_task6(request):
         'bookmodule/lab9_task6.html',
         {'publishers': publishers}
     )
+
+
+def list_books_lab10(request):
+
+    books = Book.objects.all()
+
+    return render(
+        request,
+        'bookmodule/listbooks_lab10.html',
+        {'books': books}
+    )

@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Lab10 Books
+{% endblock %}
+
+{% block content %}
+
+<h2>Lab 10 - Books List</h2>
+
+<p>
+    <a href="/books/lab10/addbook/">
+        Add New Book
+    </a>
+</p>
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Edition</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for book in books %}
+
+    <tr>
+
+        <td>{{ book.id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.price }}</td>
+        <td>{{ book.edition }}</td>
+
+        <td>
+
+            <a href="/books/lab10/editbook/{{ book.id }}/">
+                Edit
+            </a>
+
+            |
+
+            <a href="/books/lab10/deletebook/{{ book.id }}/">
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% endblock %}
